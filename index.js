@@ -1,4 +1,5 @@
 let url = "https://www.themealdb.com/api/json/v1/1/search.php?s="
+let upperHalf = document.querySelector('.container');
 let searchBtn = document.querySelector("#search-btn")
 let recipeCont = document.querySelector('#output')
 
@@ -33,23 +34,26 @@ searchBtn.addEventListener("click",() => {
     
        // Adding another recipe container into the main container with details 
        recipeCont.innerHTML = `<img src=${dishPic}>
-       <div id="upper-section">
+       <div class="container2">
+        <div id="upper-section">
            <h2>${dishName}</h2>
            <h4>${origin}<h4>
         </div>
         <div id="ingredient-cont"></div>
-        <div class="recipe"></div>
-        <button id="youtube-link"><a href="${youtubeVideo}">Click Here to see Youtube Video</a></button>
-        <button id="show-recipe">View Recipe</button>`;
+        <div class="lower-section">
+            <button id="youtube-link"><a href="${youtubeVideo}">Click Here to see Youtube Video</a></button>
+            <button id="show-recipe">View Recipe</button>
+        <div>
+        </div>`;
 
         // Styling the ingredients container
-        recipeCont.style.height = "1200px";
+        recipeCont.style.height = "fit-content";
+        recipeCont.style.minWidth = "200px";
         recipeCont.style.backgroundColor = "#ffffff";
         recipeCont.style.borderBottom = "5px solid #ffffff";
         recipeCont.style.borderRadius = "10px";
 
         let ingredientContainer = document.getElementById('ingredient-cont');
-        let recipeContainer = document.querySelector(".recipe");
         let viewRecipe = document.querySelector("#show-recipe");
         let list = document.createElement("ul");
 
@@ -60,14 +64,20 @@ searchBtn.addEventListener("click",() => {
              list.appendChild(listChild);
              ingredientContainer.appendChild(list);
         })
+
+        let recipeContainer = document.createElement('div');
+        recipeContainer.classList.add('recipe');
         
         viewRecipe.addEventListener("click",()=>{
-            recipeContainer.innerHTML = `<div id="recipe">
-            <h2>Instructions</h2>
-            <p id="text">${instructions}</p>
-            </div>`
+            upperHalf.appendChild(recipeContainer);
+            recipeCont.style.display = "none";
+            // let recipeContainer = document.createElement('div');
+            // recipeContainer.classList.add('recipe');
+            let text = document.createElement('p');
+            text.classList.add('text');
+            text.innerHTML = `${instructions}`
+            recipeContainer.appendChild(text);
+            recipeContainer.style.display = "block"; // Show the container
         }) 
     })
 })
-
-
